@@ -38,12 +38,10 @@ public class BlogPost {
     @Column(name = "dislikes", nullable = false)
     private Integer dislikes;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;

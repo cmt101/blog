@@ -20,19 +20,16 @@ import java.sql.Timestamp;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "body", nullable = false)
     private String body;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;

@@ -39,12 +39,10 @@ public class Profile {
     @Column(name = "birth_date")
     private Date birthDate;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;

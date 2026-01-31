@@ -31,12 +31,10 @@ public class Tag {
     @Column(name = "value", nullable = false)
     private String value;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
