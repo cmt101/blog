@@ -7,7 +7,6 @@ import com.calebtl.blog.entities.Profile;
 import com.calebtl.blog.entities.User;
 import com.calebtl.blog.exceptions.UserExistsException;
 import com.calebtl.blog.exceptions.UserNotFoundException;
-import com.calebtl.blog.mappers.CreateUserMapper;
 import com.calebtl.blog.mappers.ProfileMapper;
 import com.calebtl.blog.mappers.UserMapper;
 import com.calebtl.blog.repositories.ProfileRepository;
@@ -24,7 +23,6 @@ public class UserService {
     private UserRepository userRepository;
     private UserMapper userMapper;
     private ProfileMapper profileMapper;
-    private CreateUserMapper createUserMapper;
     private final ProfileRepository profileRepository;
 
     public List<UserDto> getAllUsersSorted() {
@@ -35,11 +33,7 @@ public class UserService {
     }
 
     public UserDto getUserById(Long id) {
-        User u = userRepository.findUserById(id).orElse(null);
-        if (u == null) {
-            return null;
-        }
-
+        User u = userRepository.findUserById(id).orElseThrow(UserNotFoundException::new);
         return userMapper.toDto(u);
     }
 
@@ -49,7 +43,7 @@ public class UserService {
             throw new UserExistsException();
         }
 
-        User u = createUserMapper.toEntity(data);
+        User u = userMapper.toEntity(data);
         u.getProfile().setUser(u);
         userRepository.save(u);
 
