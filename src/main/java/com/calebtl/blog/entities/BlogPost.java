@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -52,6 +53,9 @@ public class BlogPost {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    
+    @OneToMany(mappedBy = "blogPost")
+    List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
