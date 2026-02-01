@@ -1,9 +1,7 @@
 package com.calebtl.blog.mappers;
 
 import com.calebtl.blog.dtos.ProfileDto;
-import com.calebtl.blog.dtos.UserDto;
 import com.calebtl.blog.entities.Profile;
-import com.calebtl.blog.entities.User;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

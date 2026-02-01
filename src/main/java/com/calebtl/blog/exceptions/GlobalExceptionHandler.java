@@ -13,12 +13,27 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserExistsException.class)
     public ResponseEntity<Map<String, String>> handleUserExists() {
-        return ResponseEntity.badRequest().body(Map.of("email", "Email is already registered"));
+        return ResponseEntity.badRequest().body(Map.of("message", "Email is already registered"));
+    }
+
+    @ExceptionHandler(BlogPostExistsException.class)
+    public ResponseEntity<Map<String, String>> handleBlogPostExists() {
+        return ResponseEntity.badRequest().body(Map.of("message", "Blog post already exists"));
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleUserNotFound() {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "User not found"));
+    }
+
+    @ExceptionHandler(BlogPostNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleBlogPostNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Blog post not found"));
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleCommentNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Comment not found"));
     }
 
 }

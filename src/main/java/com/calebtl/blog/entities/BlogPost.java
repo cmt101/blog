@@ -33,10 +33,10 @@ public class BlogPost {
     private String body;
 
     @Column(name = "likes", nullable = false)
-    private Integer likes;
+    private Integer likes = 0;
 
     @Column(name = "dislikes", nullable = false)
-    private Integer dislikes;
+    private Integer dislikes = 0;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
@@ -48,16 +48,16 @@ public class BlogPost {
 
 
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
     
-    @OneToMany(mappedBy = "blogPost")
+    @OneToMany(mappedBy = "blogPost", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     List<Comment> comments;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
-            name = "post_tags",
+            name = "posts_tags",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
