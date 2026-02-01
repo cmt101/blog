@@ -1,7 +1,6 @@
 package com.calebtl.blog.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -23,7 +22,7 @@ public class BlogPostDto {
 
     private Integer dislikes = 0;
 
-    private UserDto author;
+    private Long authorId;
 
     private List<CommentDto> comments;
 

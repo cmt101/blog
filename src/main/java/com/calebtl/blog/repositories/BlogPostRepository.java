@@ -24,5 +24,7 @@ public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
     @Query(value = "select bp from BlogPost bp JOIN bp.tags t where t.name=:name and t.value=:value order by bp.createdAt desc")
     List<BlogPost> findBlogPostsWithTag(@Param("name") String name, @Param("value") String value);
 
-
+    @EntityGraph(attributePaths = "user")
+    @Query(value = "select bp from BlogPost bp where bp.id=:id")
+    Optional<BlogPost> findBlogPostByIdForDelete(@Param("id")Long id);
 }

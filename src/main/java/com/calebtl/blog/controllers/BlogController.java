@@ -3,6 +3,7 @@ package com.calebtl.blog.controllers;
 import com.calebtl.blog.dtos.BlogPostDto;
 import com.calebtl.blog.dtos.CommentDto;
 import com.calebtl.blog.dtos.CreateBlogPostRequest;
+import com.calebtl.blog.dtos.UpdateBlogPostRequest;
 import com.calebtl.blog.services.BlogService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class BlogController {
         return ResponseEntity.ok(blogService.getBlogPostById(id));
     }
 
+    // TODO: Check this one
     @GetMapping("/tag/{name}/{value}")
     public ResponseEntity<List<BlogPostDto>> getBlogPostsWithTags(@PathVariable(name = "name") String name,
                                                                   @PathVariable(name = "value") String value) {
@@ -37,12 +39,15 @@ public class BlogController {
         return ResponseEntity.created(uri).body(blogPostDto);
     }
 
-    // TODO: Make separate Dto for this request
     @PutMapping("/{id}")
     public ResponseEntity<BlogPostDto> updateBlogPost(@PathVariable(name = "id") Long id,
-                                                      @Valid @RequestBody BlogPostDto data) {
+                                                      @Valid @RequestBody UpdateBlogPostRequest data) {
         return ResponseEntity.ok(blogService.updateBlogPost(id, data));
     }
+
+    //TODO: Add endpoints to increment/decrement likes and dislikes
+
+    //TODO: Add endpoints to add/remove tags
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBlogPost(@PathVariable(name = "id") Long id) {

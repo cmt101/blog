@@ -3,6 +3,7 @@ package com.calebtl.blog.services;
 import com.calebtl.blog.dtos.BlogPostDto;
 import com.calebtl.blog.dtos.CommentDto;
 import com.calebtl.blog.dtos.CreateBlogPostRequest;
+import com.calebtl.blog.dtos.UpdateBlogPostRequest;
 import com.calebtl.blog.entities.BlogPost;
 import com.calebtl.blog.entities.Comment;
 import com.calebtl.blog.entities.User;
@@ -53,6 +54,7 @@ public class BlogService {
         }
         Long currentUserId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        // Not sure if this is strictly necessary
         User u = userRepository.findUserById(currentUserId).orElseThrow(UserNotFoundException::new);
 
         // I could make another mapper specifically for the create request, but this is just 3 lines
@@ -69,7 +71,10 @@ public class BlogService {
 
     // Only the owner of the blog post can update it
     @Transactional
-    public BlogPostDto updateBlogPost(Long id, BlogPostDto updates) {
+    public BlogPostDto updateBlogPost(Long id, UpdateBlogPostRequest updates) {
+
+        // TODO: Add extra error handling here. Title is unique, make this query findByIdOrEmail
+        //  if more than one record is returned, we can't make the update
         BlogPost bp = blogPostRepository.findBlogPostById(id).orElseThrow(BlogPostNotFoundException::new);
 
         userService.currentUserOwnsResource(bp.getUser().getId());
@@ -82,7 +87,7 @@ public class BlogService {
     // Only the owner of the blog post can delete it
     @Transactional
     public void deleteBlogPost(Long id) {
-        BlogPost bp = blogPostRepository.findById(id).orElseThrow(BlogPostNotFoundException::new);
+        BlogPost bp = blogPostRepository.findBlogPostByIdForDelete(id).orElseThrow(BlogPostNotFoundException::new);
         userService.currentUserOwnsResource(bp.getUser().getId());
         blogPostRepository.delete(bp);
     }
