@@ -2,6 +2,7 @@ package com.calebtl.blog.controllers;
 
 import com.calebtl.blog.dtos.BlogPostDto;
 import com.calebtl.blog.dtos.CommentDto;
+import com.calebtl.blog.dtos.CreateBlogPostRequest;
 import com.calebtl.blog.services.BlogService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -29,10 +30,8 @@ public class BlogController {
         return ResponseEntity.ok(blogService.getBlogPostByTag(name, value));
     }
 
-    // TODO: When adding authentication, check to see if the user making the request was the original poster of the blog
-
     @PostMapping
-    public ResponseEntity<?> createBlogPost(@Valid @RequestBody BlogPostDto data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> createBlogPost(@Valid @RequestBody CreateBlogPostRequest data, UriComponentsBuilder uriBuilder) {
         BlogPostDto blogPostDto = blogService.createBlogPost(data);
         URI uri = uriBuilder.path("/blog/{id}").buildAndExpand(blogPostDto.getId()).toUri();
         return ResponseEntity.created(uri).body(blogPostDto);

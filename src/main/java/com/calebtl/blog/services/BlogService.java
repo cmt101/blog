@@ -2,28 +2,24 @@ package com.calebtl.blog.services;
 
 import com.calebtl.blog.dtos.BlogPostDto;
 import com.calebtl.blog.dtos.CommentDto;
-import com.calebtl.blog.dtos.UserDto;
+import com.calebtl.blog.dtos.CreateBlogPostRequest;
 import com.calebtl.blog.entities.BlogPost;
 import com.calebtl.blog.entities.Comment;
-import com.calebtl.blog.entities.Tag;
 import com.calebtl.blog.entities.User;
 import com.calebtl.blog.exceptions.BlogPostExistsException;
 import com.calebtl.blog.exceptions.BlogPostNotFoundException;
-import com.calebtl.blog.exceptions.UserExistsException;
 import com.calebtl.blog.exceptions.UserNotFoundException;
 import com.calebtl.blog.mappers.BlogPostMapper;
 import com.calebtl.blog.mappers.CommentMapper;
-import com.calebtl.blog.mappers.UserMapper;
 import com.calebtl.blog.repositories.BlogPostRepository;
 import com.calebtl.blog.repositories.CommentRepository;
 import com.calebtl.blog.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -51,13 +47,19 @@ public class BlogService {
     }
 
     @Transactional
-    public BlogPostDto createBlogPost(BlogPostDto data) {
+    public BlogPostDto createBlogPost(CreateBlogPostRequest data) {
         if (blogPostRepository.existsByTitle(data.getTitle())) {
             throw new BlogPostExistsException();
         }
+        Long currentUserId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        User u = userRepository.findUserById(data.getAuthor().getId()).orElseThrow(UserNotFoundException::new);
-        BlogPost bp = blogPostMapper.toEntity(data);
+        User u = userRepository.findUserById(currentUserId).orElseThrow(UserNotFoundException::new);
+
+        // I could make another mapper specifically for the create request, but this is just 3 lines
+        BlogPost bp = new BlogPost();
+        bp.setTitle(data.getTitle());
+        bp.setBody(data.getBody());
+
         u.getBlogPosts().add(bp);
         bp.setUser(u);
         blogPostRepository.save(bp);
