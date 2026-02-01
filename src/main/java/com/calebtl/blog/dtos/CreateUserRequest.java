@@ -3,10 +3,11 @@ package com.calebtl.blog.dtos;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
 @AllArgsConstructor
-@Getter
+@Data
 public class CreateUserRequest {
 
     @NotBlank

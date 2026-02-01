@@ -13,17 +13,28 @@ import com.calebtl.blog.repositories.ProfileRepository;
 import com.calebtl.blog.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private UserMapper userMapper;
     private ProfileMapper profileMapper;
     private final ProfileRepository profileRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user =  userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Collections.emptyList());
+    }
 
     public List<UserDto> getAllUsersSorted() {
         return userRepository.findAllUsersSorted()
