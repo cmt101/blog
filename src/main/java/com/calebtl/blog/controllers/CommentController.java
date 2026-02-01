@@ -14,8 +14,6 @@ public class CommentController {
 
     private CommentService commentService;
 
-    // TODO: When adding authentication, check to see if the user making the request was the original poster of the comment
-
     @PutMapping("/{commentId}")
     public ResponseEntity<CommentDto> editComment(@PathVariable(name = "commentId") Long commentId,
                                                   @Valid @RequestBody CommentDto data) {
