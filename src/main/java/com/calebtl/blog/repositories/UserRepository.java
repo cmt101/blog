@@ -26,7 +26,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllUsersSorted();
 
     @EntityGraph(attributePaths = "profile")
-    @Query(value = "select u from User u where u.id=:id")
     Optional<User> findUserById(@Param("id") Long id);
 
     @Override

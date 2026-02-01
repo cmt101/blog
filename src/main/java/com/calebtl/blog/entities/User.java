@@ -37,10 +37,9 @@ public class User {
 
 
 
-    // In reality, we don't need a separate table for profile. This is here for demonstration.
-    // Also, we don't strictly need to define fetch type here, however, when retrieving a
-    //      profile directly from the ProfileRepository, we don't necessarily want to do a join
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    // In reality, we don't need a separate table for profile. Just wanted to show OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "profile_id")
     private Profile profile;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
