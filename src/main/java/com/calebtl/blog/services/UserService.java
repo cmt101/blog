@@ -15,6 +15,7 @@ import com.calebtl.blog.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class UserService {
+    private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
     private UserMapper userMapper;
     private ProfileMapper profileMapper;
@@ -44,9 +46,8 @@ public class UserService {
         if (userRepository.existsByEmail(data.getEmail())) {
             throw new UserExistsException();
         }
-
+        data.setPassword(passwordEncoder.encode(data.getPassword()));
         User u = userMapper.toEntity(data);
-        //u.getProfile().setUser(u);
         userRepository.save(u);
 
         return userMapper.toDto(u);
@@ -57,7 +58,8 @@ public class UserService {
     @Transactional
     public ProfileDto updateUserProfile(Long id, ProfileDto updates) {
         currentUserOwnsResource(id);
-        Profile p = profileRepository.findByUserId(id).orElseThrow(UserNotFoundException::new);
+        User u = userRepository.findUserById(id).orElseThrow(UserNotFoundException::new);
+        Profile p = u.getProfile();
         profileMapper.update(updates, p);
         profileRepository.save(p);
         return profileMapper.toDto(p);

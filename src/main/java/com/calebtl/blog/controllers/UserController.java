@@ -7,7 +7,6 @@ import com.calebtl.blog.services.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -19,7 +18,6 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private UserService userService;
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -33,7 +31,6 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserRequest data, UriComponentsBuilder uriBuilder) {
-        data.setPassword(passwordEncoder.encode(data.getPassword()));
         UserDto userDto = userService.createUser(data);
         URI uri = uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
         return ResponseEntity.created(uri).body(userDto);
