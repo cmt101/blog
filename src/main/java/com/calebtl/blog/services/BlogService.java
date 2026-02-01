@@ -29,6 +29,7 @@ import java.util.Set;
 @Service
 public class BlogService {
 
+    private UserService userService;
     private UserRepository userRepository;
     private CommentRepository commentRepository;
     private BlogPostRepository blogPostRepository;
@@ -64,17 +65,23 @@ public class BlogService {
         return blogPostMapper.toDto(bp);
     }
 
+    // Only the owner of the blog post can update it
     @Transactional
     public BlogPostDto updateBlogPost(Long id, BlogPostDto updates) {
         BlogPost bp = blogPostRepository.findBlogPostById(id).orElseThrow(BlogPostNotFoundException::new);
+
+        userService.currentUserOwnsResource(bp.getUser().getId());
+
         blogPostMapper.update(blogPostMapper.toEntity(updates), bp);
         blogPostRepository.save(bp);
         return blogPostMapper.toDto(bp);
     }
 
+    // Only the owner of the blog post can delete it
     @Transactional
     public void deleteBlogPost(Long id) {
         BlogPost bp = blogPostRepository.findById(id).orElseThrow(BlogPostNotFoundException::new);
+        userService.currentUserOwnsResource(bp.getUser().getId());
         blogPostRepository.delete(bp);
     }
 

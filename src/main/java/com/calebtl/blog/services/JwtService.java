@@ -1,5 +1,6 @@
 package com.calebtl.blog.services;
 
+import com.calebtl.blog.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -19,11 +20,12 @@ public class JwtService {
     @Value("${spring.jwt.secret}")
     private String secret;
 
-    public String generateToken(String email) {
+    public String generateToken(User user) {
         //1 day
         long tokenExpiration = 86400;
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getId().toString())
+                .claim("email", user.getEmail())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
@@ -39,9 +41,9 @@ public class JwtService {
         }
     }
 
-    public String getEmailFromToken(String token) {
+    public Long getUserIdFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
-        return claims.getSubject();
+        return Long.valueOf(claims.getSubject());
     }
 
     private Claims getClaimsFromToken(String token) {

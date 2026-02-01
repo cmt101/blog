@@ -5,6 +5,7 @@ import com.calebtl.blog.dtos.ProfileDto;
 import com.calebtl.blog.dtos.UserDto;
 import com.calebtl.blog.entities.Profile;
 import com.calebtl.blog.entities.User;
+import com.calebtl.blog.exceptions.UnauthorizedException;
 import com.calebtl.blog.exceptions.UserExistsException;
 import com.calebtl.blog.exceptions.UserNotFoundException;
 import com.calebtl.blog.mappers.ProfileMapper;
@@ -13,10 +14,10 @@ import com.calebtl.blog.repositories.ProfileRepository;
 import com.calebtl.blog.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -65,6 +66,7 @@ public class UserService implements UserDetailsService {
     // There's an argument to be made that this should go in its own ProfileService, but this also works fine.
     @Transactional
     public ProfileDto updateUserProfile(Long id, ProfileDto updates) {
+        currentUserOwnsResource(id);
         Profile p = profileRepository.findByUserId(id).orElseThrow(UserNotFoundException::new);
         profileMapper.update(updates, p);
         profileRepository.save(p);
@@ -73,7 +75,16 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void deleteUser(Long id) {
+        currentUserOwnsResource(id);
         User u = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         userRepository.delete(u);
+    }
+
+    // Not really sure the best place for this logic, but I don't want to keep writing it...
+    public void currentUserOwnsResource(Long idToCheck) {
+        Long currentUserId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!currentUserId.equals(idToCheck)) {
+            throw new UnauthorizedException();
+        }
     }
 }
