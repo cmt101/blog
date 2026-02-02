@@ -1,9 +1,6 @@
 package com.calebtl.blog.controllers;
 
-import com.calebtl.blog.dtos.BlogPostDto;
-import com.calebtl.blog.dtos.CommentDto;
-import com.calebtl.blog.dtos.CreateBlogPostRequest;
-import com.calebtl.blog.dtos.UpdateBlogPostRequest;
+import com.calebtl.blog.dtos.*;
 import com.calebtl.blog.services.BlogService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -25,7 +22,6 @@ public class BlogController {
         return ResponseEntity.ok(blogService.getBlogPostById(id));
     }
 
-    // TODO: Check this one
     @GetMapping("/tag/{name}/{value}")
     public ResponseEntity<List<BlogPostDto>> getBlogPostsWithTags(@PathVariable(name = "name") String name,
                                                                   @PathVariable(name = "value") String value) {
@@ -45,9 +41,33 @@ public class BlogController {
         return ResponseEntity.ok(blogService.updateBlogPost(id, data));
     }
 
-    //TODO: Add endpoints to increment/decrement likes and dislikes
+    @PutMapping("/{id}/like")
+    public ResponseEntity<Void> changeLikes(@PathVariable(name = "id") Long id,
+                                            @RequestParam("direction") String direction) {
+        blogService.changeLikesDislikes(id, direction, true);
+        return ResponseEntity.ok().build();
+    }
 
-    //TODO: Add endpoints to add/remove tags
+    @PutMapping("/{id}/dislike")
+    public ResponseEntity<Void> changeDislikes(@PathVariable(name = "id") Long id,
+                                               @RequestParam("direction") String direction) {
+        blogService.changeLikesDislikes(id, direction, false);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/tag")
+    public ResponseEntity<Void> addTag(@PathVariable(name = "id") Long id,
+                                       @Valid @RequestBody AddTagRequest data) {
+        blogService.addTag(id, data);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/tag/remove")
+    public ResponseEntity<Void> removeTag(@PathVariable(name = "id") Long id,
+                                          @Valid @RequestBody AddTagRequest data) {
+        blogService.removeTag(id, data);
+        return ResponseEntity.ok().build();
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBlogPost(@PathVariable(name = "id") Long id) {
