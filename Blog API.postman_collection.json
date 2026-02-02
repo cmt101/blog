@@ -1,0 +1,582 @@
+{
+  "info": {
+    "_postman_id": "cb8f915c-c77b-40d6-9240-30377eb924ac",
+    "name": "Blog API",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51990973",
+    "_collection_link": "https://go.postman.co/collection/51990973-cb8f915c-c77b-40d6-9240-30377eb924ac?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"testPass\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Blog Posts",
+      "item": [
+        {
+          "name": "AddComment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk3ODg3NCwiZXhwIjoxNzcwMDY1Mjc0fQ.-D-HWPhJSO0cRGBCQyyujtPNxj-SM9MIo2w1B9LKrac",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": \"My first comment?\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/blog/7/comment",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "7",
+                "comment"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddLike",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk4MDk4NywiZXhwIjoxNzcwMDY3Mzg3fQ.FVwtzen7nQJ-ccrNuwbOUmkfhRrIVw2C9ufCJ86Ihdk",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/blog/7/like?direction=asdfasdf",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "7",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "direction",
+                  "value": "asdfasdf"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddDislike",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk4MDk4NywiZXhwIjoxNzcwMDY3Mzg3fQ.FVwtzen7nQJ-ccrNuwbOUmkfhRrIVw2C9ufCJ86Ihdk",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/blog/7/dislike?direction=neg",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "7",
+                "dislike"
+              ],
+              "query": [
+                {
+                  "key": "direction",
+                  "value": "neg"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddTag",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk4MDk4NywiZXhwIjoxNzcwMDY3Mzg3fQ.FVwtzen7nQJ-ccrNuwbOUmkfhRrIVw2C9ufCJ86Ihdk",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"topic\",\n    \"value\": \"testTopic\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/blog/7/tag",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "7",
+                "tag"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CreateBlogPost",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk3NzgxMiwiZXhwIjoxNzcwMDY0MjEyfQ.OQ92izsrcI24p03K_P49FxTaQ3LuSGaXMjyHFit_gC8",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"My second blog\",\n    \"body\": \"Electric Avenue\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/blog",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteBlog",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk4MDk4NywiZXhwIjoxNzcwMDY3Mzg3fQ.FVwtzen7nQJ-ccrNuwbOUmkfhRrIVw2C9ufCJ86Ihdk",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"new title\",\n    \"body\": \"new body\",\n    \"likes\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/blog/8",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "8"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetBlogPost",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/blog/7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetBlogWithTag",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/blog/tag/category/test",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "tag",
+                "category",
+                "test"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RemoveTag",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk4MDk4NywiZXhwIjoxNzcwMDY3Mzg3fQ.FVwtzen7nQJ-ccrNuwbOUmkfhRrIVw2C9ufCJ86Ihdk",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"category\",\n    \"value\": \"test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/blog/7/tag/remove",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "7",
+                "tag",
+                "remove"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateBlog",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk3ODg3NCwiZXhwIjoxNzcwMDY1Mjc0fQ.-D-HWPhJSO0cRGBCQyyujtPNxj-SM9MIo2w1B9LKrac",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"new title\",\n    \"body\": \"new body\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/blog/7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blog",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "DeleteComment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk3ODg3NCwiZXhwIjoxNzcwMDY1Mjc0fQ.-D-HWPhJSO0cRGBCQyyujtPNxj-SM9MIo2w1B9LKrac",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/comment/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comment",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EditComment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk3ODg3NCwiZXhwIjoxNzcwMDY1Mjc0fQ.-D-HWPhJSO0cRGBCQyyujtPNxj-SM9MIo2w1B9LKrac",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": \"My first edited comment!!!!!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/comment/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "comment",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "CreateUser",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\n    \"email\": \"test3@test.com\",\n    \"password\": \"testPass\",\n    \"profile\": {\n        \"firstName\": \"test3FN\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteUser",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNiIsImVtYWlsIjoidGVzdDNAdGVzdC5jb20iLCJpYXQiOjE3Njk5NzU4NjEsImV4cCI6MTc3MDA2MjI2MX0.MIpdwD5Hy34LQ6MVqo3A58TzbPNACiSdFs7mvG7njpg",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/users/26",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "26"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAllUsers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk3NjAwNiwiZXhwIjoxNzcwMDYyNDA2fQ.ul0doCxjju0KqxO73qLIln5_wnbYQAosohnae5yYCxY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetUserByID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTc2OTk3NDMyOCwiZXhwIjoxNzcwMDYwNzI4fQ.sZ_LX_URg9f4_e6dt2n3ZyiPPgIr2XzNlb_31TZNmao",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/users/22",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "22"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateUserProfile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMyIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpYXQiOjE3Njk5NzYzNjEsImV4cCI6MTc3MDA2Mjc2MX0.XFGsrWE2pBr0ZV21Ua86SFhSp7WhDzWby2Jt2E-G2SY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Funny name here\",\n    \"lastName\": \"Smith\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/23/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "23",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
